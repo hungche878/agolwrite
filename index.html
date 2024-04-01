@@ -18,8 +18,10 @@
       "esri/Map",
       "esri/views/MapView",
       "esri/Graphic",  
-      "esri/layers/GraphicsLayer"  
-    ], function (esriConfig,Map, MapView, Graphic, GraphicsLayer) {
+      "esri/layers/GraphicsLayer",
+      //adding in the module for the feature layers
+      "esri/layers/FeatureLayer"
+    ], function (esriConfig,Map, MapView, Graphic, GraphicsLayer, FeatureLayer) {
 
       esriConfig.apiKey = "AAPK7376aa81e19047f49d515b880359b35fORHl2lQWZpmaRrOaLHCMcxcMKqhisFhVF-IikMIsLi4VBigmgkhwqrJeNcJmX2dL";
       const map = new Map({
@@ -122,6 +124,42 @@ graphicsLayer.add(polygonGraphic);
 
         graphicsLayer.add(pointGraphic); // Add the point graphic to the graphics layer
   
+
+        // Define a pop-up for usaeduLayer
+        const popupEduusa = {
+          "title": "EDUs",
+          "content": "<b>Name:</b> {INSTNM}<br><b>Total Enrollment:</b> {INSTSIZE}<br>"
+          
+        }
+
+        const usaeduLayer = new FeatureLayer({
+        url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer", //get URL from AGOL Item Page
+        
+        //adding the popup here
+        outFields: ["INSTNM","INSTSIZE"],
+        popupTemplate: popupEduusa
+        });
+     
+
+        map.add(usaeduLayer);
+
+        const popupAirport = {
+  "title": "US Airport",
+  "content": `
+    <p><b>Attribute 1:</b> {Owner_Addr}</p>
+    <p><b>Attribute 2:</b> {Owner_Name}</p>
+    <!-- Add more attributes as needed -->
+  `
+};
+
+const airportLayer = new FeatureLayer({
+  url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/US_Airport/FeatureServer",
+  outFields: ["Owner_Addr", "Owner_Name", /* Add more field names as needed */],
+  popupTemplate: popupAirport
+});
+
+map.add(airportLayer);
+
       });
   </script>
 
