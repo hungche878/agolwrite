@@ -162,13 +162,33 @@ graphicsLayer.add(polygonGraphic);
         }
       }
 
+      const airportLabels = {
+      symbol: {
+        type: "text",
+        color: "#FFFFFF",
+        haloColor: "#5E8D74",
+        haloSize: "2px",
+        font: {
+          size: "12px",
+          family: "Noto Sans",
+          style: "italic",
+          weight: "normal"
+        }
+      },
+      labelPlacement: "above-center",
+      labelExpressionInfo: {
+        expression: "$feature.Fac_Name"
+      }
+    };
+
       const airportLayer = new FeatureLayer({
         url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/US_Airport/FeatureServer",
         outFields: ["Owner_Addr", "Owner_Name", /* Add more field names as needed */],
         popupTemplate: popupAirport,
         renderer: airportRenderer,
-        definitionExpression: "Fac_Type = 'AIRPORT'" //adding sql to filter for airports     
-});
+        definitionExpression: "Fac_Type = 'AIRPORT'", //adding sql to filter for airports     
+        labelingInfo: [airportLabels] //adding the labels
+              });
 
       map.add(airportLayer);
 
