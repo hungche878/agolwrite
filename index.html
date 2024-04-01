@@ -63,6 +63,55 @@
           },  
           style: "triangle" // Shape of the marker
         };
+        
+const polyline = {
+  type: "polyline",
+  paths: [
+    [-97.7404, 30.2747], // Texas State Capitol
+    [-97.7404, 30.2740], // Some point south of the capitol
+    [-97.7397, 30.2740]  // Some point south-west of the capitol
+  ]
+};
+
+const simpleLineSymbol = {
+  type: "simple-line",
+  color: [226, 119, 40], // Orange
+  width: 2
+};
+
+const polylineGraphic = new Graphic({
+  geometry: polyline,
+  symbol: simpleLineSymbol
+});
+
+graphicsLayer.add(polylineGraphic);
+
+const polygon = {
+  type: "polygon",
+  rings: [
+    [-97.7404, 30.2747], // Texas State Capitol
+    [-97.7404, 30.2740], // Some point south of the capitol
+    [-97.7397, 30.2740], // Some point south-west of the capitol
+    [-97.7397, 30.2747]  // Some point west of the capitol
+  ]
+};
+
+const simpleFillSymbol = {
+  type: "simple-fill",
+  color: [227, 139, 79, 0.8], // Orange, semi-transparent
+  outline: {
+    color: [255, 255, 255],
+    width: 1
+  }
+};
+
+const polygonGraphic = new Graphic({
+  geometry: polygon,
+  symbol: simpleFillSymbol
+});
+
+graphicsLayer.add(polygonGraphic);
+
 
         const pointGraphic = new Graphic({  
           geometry: point,  
