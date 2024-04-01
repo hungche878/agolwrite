@@ -144,21 +144,34 @@ graphicsLayer.add(polygonGraphic);
         map.add(usaeduLayer);
 
         const popupAirport = {
-  "title": "US Airport",
-  "content": `
-    <p><b>Attribute 1:</b> {Owner_Addr}</p>
-    <p><b>Attribute 2:</b> {Owner_Name}</p>
-    <!-- Add more attributes as needed -->
-  `
-};
+        "title": "US Airport",
+        "content": `
+          <p><b>Owner Address:</b> {Owner_Addr}</p>
+          <p><b>Owner Name:</b> {Owner_Name}</p>
+          <!-- Add more attributes as needed -->
+        `
+      };
 
-const airportLayer = new FeatureLayer({
-  url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/US_Airport/FeatureServer",
-  outFields: ["Owner_Addr", "Owner_Name", /* Add more field names as needed */],
-  popupTemplate: popupAirport
+      const airportRenderer = {
+        "type": "simple",
+        "symbol": {
+          "type": "picture-marker",
+          "url": "https://sounny.github.io/agol/outline_local_airport_black_24dp.png",
+          "width": "18px",
+          "height": "18px"
+        }
+      }
+
+      const airportLayer = new FeatureLayer({
+        url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/US_Airport/FeatureServer",
+        outFields: ["Owner_Addr", "Owner_Name", /* Add more field names as needed */],
+        popupTemplate: popupAirport,
+        renderer: airportRenderer,
+        definitionExpression: "Fac_Type = 'AIRPORT'" //adding sql to filter for airports
+        
 });
 
-map.add(airportLayer);
+      map.add(airportLayer);
 
       });
   </script>
