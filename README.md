@@ -1,2 +1,2 @@
 # esrijs
-My first Esri JS Map
+My Esri Js Map reading and writing to AGOL
