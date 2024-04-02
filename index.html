@@ -21,11 +21,12 @@
       "esri/layers/GraphicsLayer",
       //adding in the module for the feature layers
       "esri/layers/FeatureLayer",
+      "esri/widgets/Legend",
 
       //adding editor widget
       "esri/widgets/Editor"
 
-    ], function (esriConfig,Map, MapView, Graphic, GraphicsLayer, FeatureLayer, Editor) {
+    ], function (esriConfig,Map, MapView, Graphic, GraphicsLayer, FeatureLayer, Editor, Legend) {
 
       esriConfig.apiKey = "AAPK7376aa81e19047f49d515b880359b35fORHl2lQWZpmaRrOaLHCMcxcMKqhisFhVF-IikMIsLi4VBigmgkhwqrJeNcJmX2dL";
       const map = new Map({
@@ -202,6 +203,26 @@ graphicsLayer.add(polygonGraphic);
       
       //adding the popup here
       outFields: ["AirportCode"],
+      renderer: {
+    type: "simple",  // autocasts as new SimpleRenderer()
+    symbol: {
+      type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
+      style: "diamond",
+      color: "green",  // change this to your desired color
+      size: "8px",  // pixels
+    }
+  },
+        labelingInfo: [{
+          labelExpressionInfo: {
+            expression: "$feature.AirportCode"
+          },
+          symbol: {
+            type: "text",  // autocasts as new TextSymbol()
+            color: "black",
+            haloSize: 1,
+            haloColor: "white"
+          }
+        }]
 
       });
 
@@ -221,6 +242,19 @@ graphicsLayer.add(polygonGraphic);
 
       // Add the widget to the view
       view.ui.add(editor, "top-right");
+
+       // Create a new Legend instance
+        const legend = new Legend({
+          view: view,
+          layerInfos: [{
+            layer: myAirports,
+            title: "My Airports"
+          }]
+        });
+
+        // Add the Legend to the view
+        view.ui.add(legend, "bottom-right");
+
 
       });
   </script>
